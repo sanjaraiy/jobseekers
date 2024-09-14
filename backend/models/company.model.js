@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
 const companySchema = new mongoose.Schema({
-   name: {
+   companyName: {
     type: String,
-    required: [true, 'Company is required'],
+    required: [true, 'Company name is required'],
+    unique: [true, 'Company is already registered']
     },
     description: {
         type: String,
