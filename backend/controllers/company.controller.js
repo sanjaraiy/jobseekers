@@ -45,7 +45,6 @@ export const registerCompany = async (req, res) => {
     }
 };
 
-
 export const getCompany = async (req, res) => {
     try {
         // Logged in user ID from middleware
@@ -113,11 +112,16 @@ export const getCompanyById = async (req, res) => {
     }
 };
 
-
 export const updateCompany = async (req, res) => {
     try {
         const { companyName, description, website, location } = req.body;
-      
+         
+        if(!companyName && !description && !website && !location){
+            return res.status(400).json({
+                success: false,
+                message: "All fields are already updated"
+            })
+        }
 
         // Initialize an object to store the update data
         const updateData = {};

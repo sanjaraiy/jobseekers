@@ -15,7 +15,7 @@ const companySchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: [true,'Location is required'],
+        // required: [true,'Location is required'],
     },
     logo: {
         type: String, //Url link
