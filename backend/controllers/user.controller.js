@@ -162,18 +162,11 @@ export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
         
-        // Check if all required fields are provided
-        if (!fullname || !email || !phoneNumber || !bio || !skills) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields (fullname, email, phone number, bio, and skills) are required",
-            });
-        }
-
-        // Middleware should set req.id for authenticated user
+        // Assuming the authenticated user ID is set in the request by middleware
         const userId = req.id; 
         let user = await User.findById(userId);
 
+        // Check if user exists
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -181,27 +174,41 @@ export const updateProfile = async (req, res) => {
             });
         }
 
-        // If file is uploaded (for profile picture or resume), handle file upload (using Cloudinary as an example)
+        // Handle file upload if any (profile picture or resume)
         let file = req.file;
         if (file) {
-            // Assuming you're using Cloudinary for file uploads
+            // Example code to handle file upload with Cloudinary
+            // Uncomment and configure this block if using Cloudinary
             // const uploadResult = await cloudinary.uploader.upload(file.path, {
             //     folder: 'user_profiles',
             //     resource_type: "auto", // Automatically detect the file type
             // });
             // user.profile.picture = uploadResult.secure_url;
-            // You can also handle resume upload similarly
+            // Handle resume upload similarly if required
         }
 
-        // Convert skills to an array
-        const skillsArray = skills.split(",");
+        // Convert skills to an array if provided
+        let skillsArray = [];
+        if (skills) {
+            skillsArray = skills.split(",").map(skill => skill.trim());
+        }
 
-        // Update user data
-        user.fullname = fullname;
-        user.email = email;
-        user.phoneNumber = phoneNumber;
-        user.profile.bio = bio;
-        user.profile.skills = skillsArray;
+        // Update user data with the provided fields
+        if (fullname) {
+            user.fullname = fullname;
+        }
+        if (email) {
+            user.email = email;
+        }
+        if (phoneNumber) {
+            user.phoneNumber = phoneNumber;
+        }
+        if (bio) {
+            user.profile.bio = bio;
+        }
+        if (skills) {
+            user.profile.skills = skillsArray;
+        }
 
         // Save the updated user information
         await user.save();
@@ -213,9 +220,15 @@ export const updateProfile = async (req, res) => {
             email: user.email,
             phoneNumber: user.phoneNumber,
             role: user.role,
-            profile: user.profile,
+            profile: {
+                bio: user.profile.bio,
+                skills: user.profile.skills,
+                // Add other profile fields as needed
+                // picture: user.profile.picture, // Uncomment if handling picture
+            },
         };
 
+        // Respond with the updated user details
         return res.status(200).json({
             success: true,
             user: updatedUser,
