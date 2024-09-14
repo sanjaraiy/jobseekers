@@ -24,9 +24,13 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: [true, 'JobType is required'],
     },
-    noOfPositions: {
+    experience: {
         type: Number,
-        required: [true, 'No of positions are required'],
+        required: [true, 'Experience is required']
+    },
+    position: {
+        type: Number,
+        required: [true, 'Position is required'],
     },
     company: {
        type: mongoose.Schema.Types.ObjectId,
