@@ -1,7 +1,8 @@
 import express from 'express';
 import { login, logout, register, updateProfile } from '../controllers/user.controller.js';
+import isAuthenticated from '../middlewares/auth.middleware.js';
 
-export const router = express.Router();
+const router = express.Router();
 
 router
     .route("/register")
@@ -17,4 +18,6 @@ router
 
 router
     .route("/update-profile")
-    .post(updateProfile)
+    .post(isAuthenticated, updateProfile)
+
+export default router;
