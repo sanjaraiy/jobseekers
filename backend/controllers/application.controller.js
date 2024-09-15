@@ -1,6 +1,7 @@
 import { Application } from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
 
+//Student and Admin
 export const applyJob = async (req, res) => {
     try {
         // Assuming req.id contains the logged-in user's ID
@@ -62,7 +63,7 @@ export const applyJob = async (req, res) => {
     }
 };
 
-
+//Student and Admin
 export const getAppliedJobs = async (req, res) => {
     try {
         // Assuming req.id holds the logged-in user's ID
