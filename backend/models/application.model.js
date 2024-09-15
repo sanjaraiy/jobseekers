@@ -9,7 +9,7 @@ const applicationSchema = new mongoose.Schema({
     applicant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'Student name is required'],
+        required: [true, 'Applicant name is required'],
     },
     status: {
         type: String,
