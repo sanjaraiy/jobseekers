@@ -4,6 +4,7 @@ const jobSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, 'Title is required'],
+        unique: [true, 'This title is already used']
     },
     description: {
         type: String,
