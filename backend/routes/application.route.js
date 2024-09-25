@@ -8,19 +8,19 @@ const router = express.Router();
 
 router
     .route("/apply/:id")
-    .get(isAuthenticated, applyJob)
+    .get(isAuthenticated, isAuthorization(['APPLICANT']), applyJob)
 
 router
-    .route("/")
-    .get(isAuthenticated, getAppliedJobs)
+    .route("/get-applied-jobs")
+    .get(isAuthenticated, isAuthorization(['APPLICANT']), getAppliedJobs)
     
 router
     .route("/:id/applicants")
-    .get(isAuthenticated, isAuthorization, getApplicants)
+    .get(isAuthenticated, isAuthorization(['RECRUITER']), getApplicants)
 
 router
     .route("/status/:id/update")
-    .post(isAuthenticated, isAuthorization, getAppliedJobs)
+    .post(isAuthenticated, isAuthorization(['RECRUITER']), getAppliedJobs)
 
 
 export default router;

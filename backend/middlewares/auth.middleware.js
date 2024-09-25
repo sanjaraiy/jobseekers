@@ -46,32 +46,35 @@ const isAuthenticated = async (req, res, next) => {
     }
 };
 
-const isAuthorization = async (req, res, next) => {
-    try {
-        // Assuming req.user is set by a previous authentication middleware
-        
-        
-        const authorizedRole = req.role; // Access the user's role from the request object
+const isAuthorization = (allowedRole) => {
+    return async (req, res, next) => {
+        try {
+           
+            // Access the user's role from the request object
+            const authorizedRole = req.role; 
 
-        // Check if the user has the recruiter role
-        if (authorizedRole !== 'RECRUITER') {
-            return res.status(403).json({
+            // Check if the user's role is in the allowedRoles array
+            if (!allowedRole.includes(authorizedRole)) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Access denied. You do not have permission to perform this action.",
+                });
+            }
+
+            // If the user's role is authorized, allow the request to proceed
+            next();
+            
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
                 success: false,
-                message: "Access denied. Only recruiters can perform this action.",
+                message: "Server error during authorization",
             });
         }
-
-        // If the user is a recruiter, allow the request to proceed
-        next();
-
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "Server error during authorization",
-        });
-    }
+    };
 };
+
+
 export {
     isAuthenticated,
     isAuthorization,

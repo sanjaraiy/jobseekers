@@ -63,7 +63,7 @@ export const applyJob = async (req, res) => {
     }
 };
 
-//Student and Admin
+//Student
 export const getAppliedJobs = async (req, res) => {
     try {
         // Assuming req.id holds the logged-in user's ID

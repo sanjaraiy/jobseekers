@@ -1,5 +1,6 @@
 import {Company} from '../models/company.model.js';
 
+//Recruiter only
 export const registerCompany = async (req, res) => {
     try {
         const { companyName } = req.body;
@@ -45,6 +46,7 @@ export const registerCompany = async (req, res) => {
     }
 };
 
+//Applicant only
 export const getCompany = async (req, res) => {
     try {
         // Logged in user ID from middleware
@@ -79,6 +81,8 @@ export const getCompany = async (req, res) => {
     }
 };
 
+
+//Applicant only
 export const getCompanyById = async (req, res) => {
     try {
         const companyId = req.params.id;
@@ -111,6 +115,7 @@ export const getCompanyById = async (req, res) => {
         });
     }
 };
+
 
 export const updateCompany = async (req, res) => {
     try {

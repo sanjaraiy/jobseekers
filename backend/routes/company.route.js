@@ -6,18 +6,18 @@ const router = express.Router();
 
 router
     .route("/register")
-    .post(isAuthenticated, isAuthorization, registerCompany)
+    .post(isAuthenticated, isAuthorization(['RECRUITER']), registerCompany)
 
 router
     .route("/")
-    .get(isAuthenticated, getCompany)
+    .get(isAuthenticated, isAuthorization(['APPLICANT']), getCompany)
 
 router
     .route("/:id")
-    .get(isAuthenticated, getCompanyById)
+    .get(isAuthenticated, isAuthorization(['APPLICANT']), getCompanyById)
 
 router
     .route("/update/:id")
-    .put(isAuthenticated, isAuthorization, updateCompany)
+    .put(isAuthenticated, isAuthorization(['RECRUITER']), updateCompany)
 
 export default router;

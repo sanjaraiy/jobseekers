@@ -7,20 +7,20 @@ const router = express.Router();
 
 router
     .route("/post")
-    .post(isAuthenticated, isAuthorization, postJob)
+    .post(isAuthenticated, isAuthorization(['RECRUITER']), postJob)
 
 router
     .route("/")
-    .get(isAuthenticated, getAllJobs)
+    .get(isAuthenticated, isAuthorization(['APPLICANT']), getAllJobs)
 
 router
     .route("/get-recruiter-jobs")
-    .get(isAuthenticated, isAuthorization, getAdminJobs)
+    .get(isAuthenticated, isAuthorization(['RECRUITER']), getAdminJobs)
 
 router
     .route("/:id")
     .get(isAuthenticated, getJobById)
-    .put(isAuthenticated,isAuthorization,updatePost)
-    .delete(isAuthenticated, isAuthorization, deletePost)
+    .put(isAuthenticated,isAuthorization(['RECRUITER']),updatePost)
+    .delete(isAuthenticated, isAuthorization(['RECRUITER']), deletePost)
 
 export default router;
