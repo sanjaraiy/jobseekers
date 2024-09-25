@@ -1,6 +1,6 @@
 import express, { application } from 'express';
 import { isAuthenticated, isAuthorization } from '../middlewares/auth.middleware.js';
-import { applyJob, getApplicants, getAppliedJobs } from '../controllers/application.controller.js';
+import { applyJob, getApplicants, getAppliedJobs, updateStatus } from '../controllers/application.controller.js';
 
 
 const router = express.Router();
@@ -20,7 +20,7 @@ router
 
 router
     .route("/status/:id/update")
-    .post(isAuthenticated, isAuthorization(['RECRUITER']), getAppliedJobs)
+    .post(isAuthenticated, isAuthorization(['RECRUITER']), updateStatus)
 
 
 export default router;

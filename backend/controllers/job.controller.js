@@ -1,6 +1,6 @@
 import {Job} from '../models/job.model.js';
 
-//Admin
+//Recruiter only
 export const postJob = async (req, res) => {
     try {
         const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
@@ -62,7 +62,7 @@ export const postJob = async (req, res) => {
 };
 
 
-//student and Admin
+//Applicant only
 export const getAllJobs = async (req, res) => {
     try {
         const keyword = req.query.keyword || ""; // Keyword to search for in job titles and descriptions
@@ -107,7 +107,7 @@ export const getAllJobs = async (req, res) => {
 };
 
 
-//student and Admin
+//Applicant only
 export const getJobById = async (req, res) => {
     try {
         const jobId = req.params.id;
@@ -142,7 +142,7 @@ export const getJobById = async (req, res) => {
 };
 
 
-//admin
+//Recuiter only
 export const getAdminJobs = async (req, res) => {
     try {
         const adminId = req.id; // ID of the admin or recruiter making the request
@@ -176,7 +176,7 @@ export const getAdminJobs = async (req, res) => {
     }
 };
 
-//admin
+//Recuiter only
 export const updatePost = async (req, res) => {
     try {
         const { title, description, requirements, salary, location, jobType, experience, position } = req.body;
@@ -237,7 +237,7 @@ export const updatePost = async (req, res) => {
     }
 };
 
-//admin
+//Recuiter only
 export const deletePost = async (req, res) => {
     try {
         const postId = req.params.id;

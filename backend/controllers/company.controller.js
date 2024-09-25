@@ -116,7 +116,7 @@ export const getCompanyById = async (req, res) => {
     }
 };
 
-
+//Recuiter only
 export const updateCompany = async (req, res) => {
     try {
         const { companyName, description, website, location } = req.body;

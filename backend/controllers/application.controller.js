@@ -1,7 +1,7 @@
 import { Application } from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
 
-//Student and Admin
+//Applicant only
 export const applyJob = async (req, res) => {
     try {
         // Assuming req.id contains the logged-in user's ID
@@ -63,7 +63,7 @@ export const applyJob = async (req, res) => {
     }
 };
 
-//Student
+//Applicant only
 export const getAppliedJobs = async (req, res) => {
     try {
         // Assuming req.id holds the logged-in user's ID
@@ -105,7 +105,7 @@ export const getAppliedJobs = async (req, res) => {
 };
 
 
-//done by Admin 
+//Recuiter only 
 export const getApplicants = async (req, res) => {
     try {
         const jobId = req.params.id;
@@ -146,7 +146,7 @@ export const getApplicants = async (req, res) => {
     }
 };
 
-//done by Admin
+//Recuiter only
 export const updateStatus = async (req, res) => {
     try {
         const { status } = req.body;
@@ -169,8 +169,8 @@ export const updateStatus = async (req, res) => {
             });
         }
 
-        // Update the status, ensuring it's lowercase for consistency
-        application.status = status.toLowerCase();
+        // Update the status
+        application.status = status[0].toUpperCase() + status.slice(1);
 
         // Save the updated application
         await application.save();
@@ -191,3 +191,5 @@ export const updateStatus = async (req, res) => {
         });
     }
 };
+
+
