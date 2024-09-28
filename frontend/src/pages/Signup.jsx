@@ -14,7 +14,7 @@ function Signup() {
     phone: "",
     password: "",
     role: "",
-    file: "",
+    profilePhoto: "",
   });
 
   const navigate = useNavigate();
@@ -26,12 +26,13 @@ function Signup() {
   };
 
   const changeEventFileHandler = (e) => {
-    setInput({ ...input, file: e.target.files?.[0]});
+    setInput({ ...input,  profilePhoto: e.target.files?.[0]});
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(input);
+    console.log(input);
+
     const formData = new FormData();
     formData.append("fullname",input.fullname);
     formData.append("email",input.email);
@@ -39,10 +40,15 @@ function Signup() {
     formData.append("password",input.password);
     formData.append("role",input.role);
    
-    if(input.file){
-      formData.append("file",input.file);
+    if(input.profilePhoto){
+      formData.append("profilePhoto",input.profilePhoto);
     }
-
+    
+      // Display FormData entries
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+    });
+    
     try {
 
       const response  = await axios.post(`${USER_API_END_POINT}/register`, formData, {
@@ -51,6 +57,8 @@ function Signup() {
         },
         withCredentials: true
       });
+      
+      console.log(response.data);
       
       if(response.data.success){
          navigate('/login')
@@ -100,7 +108,7 @@ function Signup() {
           <Label htmlFor="phone">Phone Number</Label>
           <Input
             className="my-2"
-            type="number"
+            type="text"
             placeholder="935333222"
             name="phone"
             value={input.phone}
@@ -145,8 +153,9 @@ function Signup() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Label>Profile</Label>
+            <Label htmlFor='profilePhoto'>Profile</Label>
             <Input
+              name="profilePhoto"
               accept="image/*"
               type="file"
               onChange={changeEventFileHandler}

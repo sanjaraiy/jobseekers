@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
+import axios from "axios";
 function Login() {
   const [input, setInput] = useState({
     email: "",
@@ -31,7 +32,7 @@ function Login() {
       })
 
       if(response.data.success){
-        navigator('/')
+        navigate('/')
         toast.success(response.data.message);
       }
       
