@@ -1,23 +1,26 @@
-import { User} from '../models/user.model.js';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-
+import bcrypt from "bcryptjs";
+import fs from "fs";
+import cloudinary from "../config/cloudinary.js"; 
+import { User } from "../models/user.model.js"; 
 
 export const register = async (req, res) => {
     try {
-        const { fullname, email, phoneNumber, password, role } = req.body;
+        // Extract fields from req.body
+        const { fullname, email, phone, password, role } = req.body;
 
-        // Check if all required fields are provided
-        if (!fullname || !email || !phoneNumber || !password || !role) {
+        console.log({ fullname, email, phone, password, role }); // Debugging log
+
+        // Check required fields
+        if (!fullname || !email || !phone || !password || !role) {
             return res.status(400).json({
                 success: false,
                 message: "Something is missing",
             });
         }
 
-        // Check if user is already registered
-        const user = await User.findOne({ email });
-        if (user) {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
             return res.status(400).json({
                 success: false,
                 message: "User is already registered",
@@ -27,35 +30,59 @@ export const register = async (req, res) => {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        let profilePhotoUrl = null;
+
+        // Check if a file was uploaded
+        console.log(req.file);
+         
+        console.log(cloudinary);
+        
+        if (req.file) {
+            const photo = req.file;
+
+            // Upload to Cloudinary
+            const photoUploadResult = await cloudinary.uploader.upload(photo.path, {
+                folder: "avatar", // Specify the folder in Cloudinary
+            });
+
+            console.log('Cloudinary Response:', photoUploadResult); // Debugging log
+
+            profilePhotoUrl = photoUploadResult.secure_url; // Get the URL of the uploaded photo
+
+            // Remove the local file after uploading to Cloudinary
+            fs.unlinkSync(photo.path);
+        }
+
         // Create a new user
         const newUser = await User.create({
             fullname,
             email,
-            phone: phoneNumber,
+            phone,
             password: hashedPassword,
             role,
+            profile: {
+                profilePhoto: profilePhotoUrl, // Save the URL in the profile object
+            }
         });
 
-        // Save the new user
-        await newUser.save();
-
-        // Select the user fields without the password
+        // Return the user data without the password
         const userWithoutPassword = await User.findById(newUser._id).select("-password");
 
-        // Return the new user data without the password
         return res.status(201).json({
             success: true,
-            message: userWithoutPassword,
+            user: userWithoutPassword,
+            message: "User registered successfully",
         });
 
     } catch (error) {
+        console.error(error); // Log the error for debugging
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error",
-            error: error.message,
+            message: error.message,
         });
     }
 };
+
 
 export const login = async (req, res) => {
     try {

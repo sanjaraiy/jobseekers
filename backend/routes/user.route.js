@@ -1,12 +1,14 @@
 import express from 'express';
 import { login, logout, register, updateProfile } from '../controllers/user.controller.js';
 import {isAuthenticated} from '../middlewares/auth.middleware.js';
+import { upload } from '../middlewares/multer.js';
+
 
 const router = express.Router();
 
 router
     .route("/register")
-    .post(register)
+    .post(upload.single('profilePhoto'), register);
 
 router
     .route("/login")
