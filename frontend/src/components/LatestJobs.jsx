@@ -10,7 +10,7 @@ function LatestJobs() {
         <div className='grid grid-cols-3 gap-4 mx-auto my-5'>
         {
             radomJob.slice(0,6).map((item, idx) => (
-                <JobCard></JobCard>
+                <JobCard key={idx}></JobCard>
             ))
         }
         </div>

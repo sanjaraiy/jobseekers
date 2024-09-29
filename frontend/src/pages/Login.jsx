@@ -7,7 +7,7 @@ import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
 
 
@@ -42,9 +42,11 @@ function Login() {
         },
         withCredentials: true,
       })
-
+      console.log(response.data);
+      
       if(response.data.success){
         navigate('/')
+        dispatch(setUser(response.data.isUser))
         toast.success(response.data.message);
       }
       

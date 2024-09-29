@@ -6,6 +6,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Jobs from "./pages/Jobs"
 import Browser from "./pages/Browser"
+import Profile from "./pages/Profile"
 function App() {
  
 
@@ -17,6 +18,7 @@ function App() {
            <Route path="/" element={<Layout></Layout>}>
               <Route index element={<Home></Home>}></Route>
             </Route>
+            <Route path="/profile" element={<Profile></Profile>}></Route>
             <Route path="/browser" element={<Browser></Browser>}></Route>
             <Route path="/jobs" element={<Jobs></Jobs>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
