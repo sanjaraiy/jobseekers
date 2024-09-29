@@ -9,6 +9,7 @@ function Home() {
       <HeroSection></HeroSection>
       <CategoryCarousel></CategoryCarousel>
       <LatestJobs></LatestJobs>
+      
     </div>
   )
 }
