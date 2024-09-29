@@ -1,5 +1,6 @@
 import FilterCard from "@/components/FilterCard";
 import JobOnly from "@/components/JobOnly";
+import Navbar from "@/components/Navbar";
 
 import React from "react";
 
@@ -8,7 +9,8 @@ const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8];
 function Jobs() {
   return (
     <div>
-      <div className="max-w-5xl mx-auto mt-5">
+      <Navbar></Navbar>
+      <div className="max-w-7xl mx-auto mt-5">
         <div className="flex gap-5">
           <div className="w-20%">
             <FilterCard></FilterCard>
@@ -23,7 +25,7 @@ function Jobs() {
                         jobsArray.map((item, index) => (
                             <div>
                                 <JobOnly></JobOnly>
-                                
+
                             </div>
                         ))
                     }
