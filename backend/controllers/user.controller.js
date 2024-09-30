@@ -2,13 +2,14 @@ import bcrypt from "bcryptjs";
 import fs from "fs";
 import cloudinary from "../config/cloudinary.js"; 
 import { User } from "../models/user.model.js"; 
+import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
     try {
         // Extract fields from req.body
         const { fullname, email, phone, password, role } = req.body;
 
-        console.log({ fullname, email, phone, password, role }); // Debugging log
+        // console.log({ fullname, email, phone, password, role }); // Debugging log
 
         // Check required fields
         if (!fullname || !email || !phone || !password || !role) {
@@ -33,9 +34,9 @@ export const register = async (req, res) => {
         let profilePhotoUrl = null;
 
         // Check if a file was uploaded
-        console.log(req.file);
+        // console.log(req.file);
          
-        console.log(cloudinary);
+        // console.log(cloudinary);
         
         if (req.file) {
             const photo = req.file;
@@ -45,7 +46,7 @@ export const register = async (req, res) => {
                 folder: "avatar", // Specify the folder in Cloudinary
             });
 
-            console.log('Cloudinary Response:', photoUploadResult); // Debugging log
+            // console.log('Cloudinary Response:', photoUploadResult); // Debugging log
 
             profilePhotoUrl = photoUploadResult.secure_url; // Get the URL of the uploaded photo
 
