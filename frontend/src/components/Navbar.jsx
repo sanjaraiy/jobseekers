@@ -78,7 +78,7 @@ function Navbar() {
                   </div>
                   <div className="flex items-center">
                     <LogOut></LogOut>
-                    <Button variant="link">Logout</Button>
+                    <Button variant="link"> Logout </Button>
                   </div>
                 </div>
               </PopoverContent>
