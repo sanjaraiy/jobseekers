@@ -7,6 +7,7 @@ import Signup from "./pages/Signup"
 import Jobs from "./pages/Jobs"
 import Browser from "./pages/Browser"
 import Profile from "./pages/Profile"
+import JobDescription from "./pages/JobDescription"
 function App() {
  
 
@@ -21,6 +22,7 @@ function App() {
             <Route path="/profile" element={<Profile></Profile>}></Route>
             <Route path="/browser" element={<Browser></Browser>}></Route>
             <Route path="/jobs" element={<Jobs></Jobs>}></Route>
+            <Route path="/jobs/description/:id" element={<JobDescription></JobDescription>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/signup" element={<Signup></Signup>}></Route>
           </Routes>
