@@ -4,15 +4,20 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import UpdateProfileDialog from "@/components/UpdateProfileDialog";
 import { Contact, Mail, Pen } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const skills = ["HTML", "CSS", "JavaScript", "Reactjs"];
+const isResume = true;
 
 function Profile() {
 //   const { user } = useSelector((store) => store.user);
-const isResume = true;
+
+const [open, setOpen] = useState(false);
+
+
   return (
     <div>
       <Navbar></Navbar>
@@ -34,7 +39,7 @@ const isResume = true;
             </p>
           </div>
         </div>
-        <Button className="text-right" variant="outline">
+        <Button onClick={()=>setOpen(true)} className="text-right" variant="outline">
           <Pen></Pen>
         </Button>
         </div>
@@ -69,6 +74,7 @@ const isResume = true;
           {/* Application Table  */}
           <AppliedJobTable></AppliedJobTable>
         </div>
+        <UpdateProfileDialog open={open} setOpen={setOpen} registeredEmail="sanjay@gmail.com"></UpdateProfileDialog>
     </div>
   );
 }
